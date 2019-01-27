@@ -376,7 +376,7 @@ Geographical properties associated to the reported location of the IP address.
 ```
 
 ``` js
-// formatted console output:
+// Formatted console output:
 
 {
   "range": [
