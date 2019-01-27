@@ -37,7 +37,7 @@ npm i jsonbin-io.js
 
 ``` js
 // Import the class from module
-import JSONbin from './jsonbin-io.js';
+import JSONbin from './node_modules/jsonbin-io.js/src/jsonbin-io.js';
 
 // Initialize an object from the imported class
 const jsonbinPrivate = new JSONbin(🔑); // Secret key: private data and more features
@@ -97,9 +97,6 @@ ID of the created bin.
 #### Example
 
 ``` js
-import JSONbin from './jsonbin-io.js';
-const jsonbin = new JSONbin();
-
 (async () => {
   const data = {a: 1, b: 2, c: ['dogs', 'cats', 'motorcycles']};
   const id = await jsonbin.create(data);
@@ -136,9 +133,6 @@ The data content of the bin.
 #### Example
 
 ``` js
-import JSONbin from './jsonbin-io.js';
-const jsonbin = new JSONbin();
-
 (async () => {
   const id = '5c4cc6e7a1021c254834adab';
   const data = await jsonbin.read(id, 0);
@@ -178,9 +172,6 @@ Version of the bin.
 #### Example
 
 ``` js
-import JSONbin from './jsonbin-io.js';
-const jsonbin = new JSONbin();
-
 (async () => {
   const id = '5c4cc6e7a1021c254834adab';
   const newData = [1, 2, 'dogs', 'cats', 'motorcycles'];
@@ -214,7 +205,7 @@ A message indicating that the bin has been deleted and the number of versions th
 #### Example
 
 ``` js
-import JSONbin from './jsonbin-io.js';
+import JSONbin from './node_modules/jsonbin-io.js/src/jsonbin-io.js';
 const jsonbin = new JSONbin(); // No secret key
 
 (async () => {
@@ -226,7 +217,7 @@ const jsonbin = new JSONbin(); // No secret key
 ```
 
 ``` js
-import JSONbin from './jsonbin-io.js';
+import JSONbin from './node_modules/jsonbin-io.js/src/jsonbin-io.js';
 const jsonbin = new JSONbin(🔑); // Secret key
 
 (async () => {
@@ -320,9 +311,6 @@ Contains a count of bin versions and a list of versions with associated timestam
 #### Example
 
 ``` js
-import JSONbin from './jsonbin-io.js';
-const jsonbin = new JSONbin();
-
 (async () => {
   const id = '5c4cc6e7a1021c254834adab';
   const versions = await jsonbin.e.versions(id);
@@ -375,9 +363,6 @@ Geographical properties associated to the reported location of the IP address.
 #### Example
 
 ``` js
-import JSONbin from './jsonbin-io.js';
-const jsonbin = new JSONbin();
-
 (async () => {
   const address = '199.59.149.165';
   const features = await jsonbin.g.lookup(address);
