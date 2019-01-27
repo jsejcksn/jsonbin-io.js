@@ -1,0 +1,31 @@
+{
+  "name": "jsonbin-io.js",
+  "version": "0.8.0",
+  "description": "Front-end JavaScript API library for the JSONbin.io storage microservice",
+  "main": "src/jsonbin-io.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsejcksn/jsonbin-io.js.git"
+  },
+  "keywords": [
+    "jsonbin.io",
+    "jsonbin-io",
+    "jsonbin",
+    "storage",
+    "javascript",
+    "api"
+  ],
+  "author": "Jesse Jackson <npm@jcksn.org> (https://jcksn.org)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jsejcksn/jsonbin-io.js/issues"
+  },
+  "homepage": "https://github.com/jsejcksn/jsonbin-io.js#readme",
+  "devDependencies": {
+    "@jsejcksn/eslint-config": "^2.0.0",
+    "eslint": "^5.12.1"
+  }
+}
