@@ -205,6 +205,8 @@ A message indicating that the bin has been deleted and the number of versions th
 #### Example
 
 ``` js
+// Won't work without secret key
+
 import JSONbin from './node_modules/jsonbin-io.js/src/jsonbin-io.js';
 const jsonbin = new JSONbin(); // No secret key
 
@@ -217,6 +219,8 @@ const jsonbin = new JSONbin(); // No secret key
 ```
 
 ``` js
+// Works!
+
 import JSONbin from './node_modules/jsonbin-io.js/src/jsonbin-io.js';
 const jsonbin = new JSONbin(🔑); // Secret key
 
@@ -314,12 +318,13 @@ Contains a count of bin versions and a list of versions with associated timestam
 (async () => {
   const id = '5c4cc6e7a1021c254834adab';
   const versions = await jsonbin.e.versions(id);
-  console.log(versions); //-> (see next code block for formatted output 👇)
+  console.log(versions); //-> (See next code block for formatted output 👇)
 })();
 ```
 
 ```js
-// formatted console output
+// Formatted console output:
+
 {
   "binVersions": [
     {
@@ -366,12 +371,13 @@ Geographical properties associated to the reported location of the IP address.
 (async () => {
   const address = '199.59.149.165';
   const features = await jsonbin.g.lookup(address);
-  console.log(features); //-> (see next code block for formatted output 👇)
+  console.log(features); //-> (See next code block for formatted output 👇)
 })();
 ```
 
 ``` js
-// formatted console output
+// formatted console output:
+
 {
   "range": [
     3342570496,
