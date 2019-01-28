@@ -170,8 +170,7 @@ export default class {
       }
     }
     catch (err) {
-      const msg = err.message;
-      console.error(msg); // eslint-disable-line no-console
+      throw err;
     }
   }
 }
