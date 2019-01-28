@@ -400,4 +400,4 @@ Geographical properties associated to the reported location of the IP address.
 
 # CodePen Demo
 
-You can experiment and learn using [this interactive CodePen example](https://codepen.io/anon/pen/xMVgqv?editors=0012).
+You can experiment and learn using [this interactive CodePen example](https://codepen.io/anon/pen/rPeRrb?editors=0012).
