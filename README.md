@@ -1,13 +1,11 @@
 # Front-end JavaScript API for [JSONbin.io](https://jsonbin.io) {☁️}
 
-[View API Reference](https://jsonbin.io/api-reference/)
-
 
 ## Table of Contents
 
+  - [Get your API secret key](#get-your-api-secret-key)
   - [Download](#download)
   - [Use](#use)
-  - [Get your API secret key](#get-your-api-secret-key)
   - [Endpoints](#endpoints)
     - [Bins](#bins)
       - [Create](#create)
@@ -22,6 +20,11 @@
     - [Geolocation](#geolocation)
       - [Lookup](#lookup)
   - [CodePen Demo](#codepen-demo)
+
+
+# Get your API secret key
+
+A secret key is not required in order to use the core functionality of JSONbin.io. However, one is needed in order to create private bins, and to use more features of the API. You can get one at [https://jsonbin.io/api-keys](https://jsonbin.io/api-keys).
 
 
 # Download
@@ -45,12 +48,9 @@ const jsonbinPublic = new JSONbin(); // No secret key: only interact with public
 ```
 
 
-# Get your API secret key
-
-A secret key is not required in order to use the core functionality of JSONbin.io. However, one is needed in order to create private bins, and to use more features of the API. You can get one at [https://jsonbin.io/api-keys](https://jsonbin.io/api-keys).
-
-
 # Endpoints
+
+[Full API Reference](https://jsonbin.io/api-reference/)
 
 > All methods in this library return promises
 
@@ -99,8 +99,13 @@ ID of the created bin.
 ``` js
 (async () => {
   const data = {a: 1, b: 2, c: ['dogs', 'cats', 'motorcycles']};
-  const id = await jsonbin.create(data);
-  console.log(id); //-> 5c4cc6e7a1021c254834adab
+  try {
+    const id = await jsonbin.create(data);
+    console.log(id); //-> '5c4cc6e7a1021c254834adab'
+  }
+  catch (err) {
+    console.error(err.message);
+  }
 })();
 ```
 
@@ -135,8 +140,13 @@ The data content of the bin.
 ``` js
 (async () => {
   const id = '5c4cc6e7a1021c254834adab';
-  const data = await jsonbin.read(id, 0);
-  console.log(data); //-> {"c":["dogs","cats","motorcycles"],"b":2,"a":1}
+  try {
+    const data = await jsonbin.read(id, 0);
+    console.log(data); //-> '{"c":["dogs","cats","motorcycles"],"b":2,"a":1}'
+  }
+  catch (err) {
+    console.error(err.message);
+  }
 })();
 ```
 
@@ -175,9 +185,14 @@ Version of the bin.
 (async () => {
   const id = '5c4cc6e7a1021c254834adab';
   const newData = [1, 2, 'dogs', 'cats', 'motorcycles'];
-  const version = await jsonbin.update(id, newData);
-  console.log(version); //-> 1
-  console.log(await jsonbin.read(id, version)); //-> [1,2,"dogs","cats","motorcycles"]
+  try {
+    const version = await jsonbin.update(id, newData);
+    console.log(version); //-> 1
+    console.log(await jsonbin.read(id, version)); //-> '[1,2,"dogs","cats","motorcycles"]'
+  }
+  catch (err) {
+    console.error(err.message);
+  }
 })();
 ```
 
@@ -212,9 +227,19 @@ const jsonbin = new JSONbin(); // No secret key
 
 (async () => {
   const id = '5c4cc6e7a1021c254834adab';
-  const message = await jsonbin.delete(id); // "Error 401: Need to provide a secret-key to DELETE bins"
-  console.log(message); //-> undefined
-  console.log(await jsonbin.read(id)); //-> [1,2,"dogs","cats","motorcycles"]
+  try {
+    const message = await jsonbin.delete(id); // An error is thrown here, so control is passed to the next catch block
+    console.log(message);
+  }
+  catch (err) {
+    console.error(err.message); //-> 'Error 401: Need to provide a secret-key to DELETE bins'
+  }
+  try {
+    console.log(await jsonbin.read(id)); //-> '[1,2,"dogs","cats","motorcycles"]'
+  }
+  catch (err) {
+    console.error(err.message);
+  }
 })();
 ```
 
@@ -226,13 +251,18 @@ const jsonbin = new JSONbin(🔑); // Secret key
 
 (async () => {
   const data = {a: 1, b: 2, c: [3, 4, 5]};
-  const id = await jsonbin.create(data);
-  console.log(id); //-> 5c4ce1de5bc16725808d4056
-  const version = await jsonbin.update(id, data.c);
-  console.log(version); //-> 1
+  try {
+    const id = await jsonbin.create(data);
+    console.log(id); //-> 5c4ce1de5bc16725808d4056
+    const version = await jsonbin.update(id, data.c);
+    console.log(version); //-> 1
 
-  const msg = await jsonbin.delete(id);
-  console.log(msg); //-> "Bin 5c4ce1de5bc16725808d4056 is deleted successfully. 1 versions removed."
+    const msg = await jsonbin.delete(id);
+    console.log(msg); //-> "Bin 5c4ce1de5bc16725808d4056 is deleted successfully. 1 versions removed."
+  }
+  catch (err) {
+    console.error(err.message);
+  }
 })();
 ```
 
@@ -260,6 +290,21 @@ jsonbin.c.create(name);
 📬 _string_  
 ID of the created collection.
 
+#### Example
+
+``` js
+(async () => {
+  const name = 'My secret bins';
+  try {
+    const id = await jsonbin.c.create(name);
+    console.log(id); //-> YOUR_COLLECTION_ID
+  }
+  catch (err) {
+    console.error(err.message);
+  }
+})();
+```
+
 
 ### [Update](https://jsonbin.io/api-reference/collections/update)
 
@@ -283,6 +328,22 @@ Set the new name of the collection. 3 to 32 characters.
 
 📬 _boolean_  
 `true`
+
+#### Example
+
+``` js
+(async () => {
+  const id = YOUR_COLLECTION_ID;
+  const name = 'My public bins';
+  try {
+    const success = await jsonbin.c.update(id, name);
+    console.log(success ? 'Great!' : 'Oh, no!'); //-> 'Great!'
+  }
+  catch (err) {
+    console.error(err.message);
+  }
+})();
+```
 
 
 ## Experimental
@@ -317,8 +378,13 @@ Contains a count of bin versions and a list of versions with associated timestam
 ``` js
 (async () => {
   const id = '5c4cc6e7a1021c254834adab';
-  const versions = await jsonbin.e.versions(id);
-  console.log(versions); //-> (See next code block for formatted output 👇)
+  try {
+    const versions = await jsonbin.e.versions(id);
+    console.log(versions); //-> (See next code block for formatted output 👇)
+  }
+  catch (err) {
+    console.error(err.message);
+  }
 })();
 ```
 
@@ -370,8 +436,13 @@ Geographical properties associated to the reported location of the IP address.
 ``` js
 (async () => {
   const address = '199.59.149.165';
-  const features = await jsonbin.g.lookup(address);
-  console.log(features); //-> (See next code block for formatted output 👇)
+  try {
+    const features = await jsonbin.g.lookup(address);
+    console.log(features); //-> (See next code block for formatted output 👇)
+  }
+  catch (err) {
+    console.error(err.message);
+  }
 })();
 ```
 
